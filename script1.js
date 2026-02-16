@@ -1,6 +1,7 @@
 let font;
 let font2;
 let font3;
+let font4;
 let points = [];
 let xMouse, yMouse;
 let fValue = 220;
@@ -13,6 +14,7 @@ function preload() {
   font = loadFont('fonts/Antique-Olive-Std-Black.ttf');
   font2 = loadFont('fonts/Ballet-Regular-VariableFont_opsz.ttf');
   font3 = loadFont('fonts/JALLEAU.ttf');
+  font4 = loadFont('fonts/ClashDisplay-Variable.ttf');
 }
 
 
