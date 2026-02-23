@@ -72,6 +72,8 @@ function setup() {
   } else {
     dotFont = font;
   }
+
+
   updateText();
 });
 
@@ -99,8 +101,8 @@ function draw() {
   xMouse = mouseX - width/2;
   yMouse = mouseY - height/2;
   ellipse(points[i].x, points[i].y, xMouse*0.1, yMouse*0.1);
-  if (keyIsPressed === true) {
-    if (keyCode === 16) {
+    if (keyIsPressed === true) {
+    if (keyCode === 32) {
       ellipse(points[i].x, points[i].y, xMouse*0.1, xMouse*0.1);
     }
   }
