@@ -10,6 +10,9 @@ let sAlpha = 0;
 var textSlider;
 var textSizeValue = 200;
 
+///ajouter scrolling pour faire varier la taille du texte
+///
+
 function preload() {
   font = loadFont('fonts/Antique-Olive-Std-Black.ttf');
   font2 = loadFont('fonts/Ballet-Regular-VariableFont_opsz.ttf');
