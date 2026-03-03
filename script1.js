@@ -5,7 +5,7 @@ let font4;
 let points = [];
 let xMouse, yMouse;
 let fValue = 220;
-let sValue = 0;
+let sValue = 220;
 let sAlpha = 0;
 var textSlider;
 var textSizeValue = 200;
@@ -89,42 +89,28 @@ function updateText() {
     sampleFactor: 0.1, simplifyThreshold: 0
   });
 }
-
-
 }
 
 function draw() {
   background(10);
   for (let i=0; i<points.length; i++){
-  fill(fValue);
-  stroke(sValue, sValue, sValue, sAlpha);
+  fill(fValue); 
+  stroke(sValue);
   xMouse = mouseX - width/2;
   yMouse = mouseY - height/2;
-  ellipse(points[i].x, points[i].y, xMouse*0.1, yMouse*0.1);
-    if (keyIsPressed === true) {
-    if (keyCode === 32) {
+      if (keyIsDown(16) === true) {
       ellipse(points[i].x, points[i].y, xMouse*0.1, xMouse*0.1);
+    } else {
+        ellipse(points[i].x, points[i].y, xMouse*0.1, yMouse*0.1);
     }
-  }
-}
-}
-
-function mouseClicked(){
-  if (fValue === 220) {
+    if (keyIsPressed === true) {
+      if (keyCode === 32) {
+      if (fValue === 220) {
   fValue = (10)}
-  else {
-    fValue = (220);
-  }
-  if (sValue === 0) {
-    sValue = (220)}
-  else {
-    sValue = (0);
-  }
-  if (sAlpha === 0) {
-    sAlpha = (255)}
-  else {
-    sAlpha = (0);
-  }
+  else {fValue = (220)}
+}
+}
+}
 }
 
 function windowResized() {
