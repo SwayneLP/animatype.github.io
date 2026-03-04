@@ -11,6 +11,7 @@ var textSlider;
 var textSizeValue = 200;
 let canToggleColor = true;
 let shape;
+let dotFont;
 let backgroundColor = '#1406dc';
 let textColor = '#ccc';
 let textColorPicker;
@@ -25,6 +26,21 @@ function preload() {
 }
 
 let input;
+
+function mouseWheel(event) {
+  event.delta < 0 ? pas = min(pas + 0.01, 1) : pas = max(pas - 0.01, 0.01);
+  updateText();
+  return false;
+}
+
+function updateText() {
+  if (!input || !textSlider || !dotFont) return;
+  textAlign(CENTER, CENTER);
+  textSizeValue = textSlider.value();
+  points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
+    sampleFactor: pas, simplifyThreshold: 0
+  });
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -47,7 +63,7 @@ function setup() {
 
 
   shape = rect;
-  var dotFont = font;
+  dotFont = font;
 /// Slider taille de texte
   textSlider = createSlider(12, 200, 200);
   textSlider.style('width', '25vw');
@@ -146,15 +162,6 @@ function setup() {
   points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
     sampleFactor: pas, simplifyThreshold: 0
   });
-
-
-function updateText() {
-  textAlign(CENTER, CENTER);
-  textSizeValue = textSlider.value();
-  points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
-    sampleFactor: pas, simplifyThreshold: 0
-  });
-}
 }
 
 function draw() {
