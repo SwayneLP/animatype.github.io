@@ -9,9 +9,13 @@ let sValue = 220;
 let sAlpha = 0;
 var textSlider;
 var textSizeValue = 200;
-
-///ajouter scrolling pour faire varier la taille du texte
-///
+let canToggleColor = true;
+let shape;
+let backgroundColor = '#1406dc';
+let textColor = '#ccc';
+let textColorPicker;
+let backgroundColorPicker;
+var pas = 0.1;
 
 function preload() {
   font = loadFont('fonts/Antique-Olive-Std-Black.ttf');
@@ -20,50 +24,63 @@ function preload() {
   font4 = loadFont('fonts/ClashDisplay-Variable.ttf');
 }
 
-
-/// ajouter une zone de texte pour récupérer le texte à afficher
 let input;
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
 
-  var dotFont = font;
+    textColorPicker = createColorPicker(textColor);
+    textColorPicker.addClass('color-picker');
+    textColorPicker.position(450, 10);
+    textColorPicker.style('width', '24px');
+    textColorPicker.style('height', '24px');
+    textColorPicker.style('padding', '0px');
+    textColorPicker.style('background-color', 'transparent');
 
+    bgColorPicker = createColorPicker(backgroundColor);
+    bgColorPicker.addClass('color-picker');
+    bgColorPicker.position(450, 40);
+    bgColorPicker.style('width', '24px');
+    bgColorPicker.style('height', '24px');
+    bgColorPicker.style('padding', '0px');
+    bgColorPicker.style('background-color', 'transparent');  
+
+
+  shape = rect;
+  var dotFont = font;
+/// Slider taille de texte
   textSlider = createSlider(12, 200, 200);
-  textSlider.style('width', '50vw');
-  textSlider.position(width/2 - textSlider.width/2, height-150);
+  textSlider.style('width', '25vw');
+  textSlider.position(width - textSlider.width - 30, 72);
   textSlider.addClass('slider');
   
-
+/// Input de texte
   input = createInput('Try me baby !');
   input.style('font-size', '24px');
-  input.style('font-family', 'Clash Display, sans-serif');
-  input.style('font-weight', '600');
-  input.style('width', '50vw');
-  input.style('color', '#ccc');
-  input.style('padding', '8px');
+  input.style('font-family', 'FlorDeRuina, sans-serif');
+  input.style('width', '25vw');
+  input.style('color', textColor);
   input.style('text-align', 'center');
-  input.style('border', '2px solid #ccc');
-  input.style('border-radius', '24px');
-  input.style('background-color', 'black');
-  input.position(width/2 - input.width/2, height-100);
+  input.style('border', `2px solid ${textColor}`);
+  input.style('background-color', 'transparent');
+  input.position(width - input.width - 32, 16);
 
   input.input(updateText);
 
   textSlider.input(updateText);
 
+  // Bouton de changement de font
   let fontButton = createButton('Change Font');
-    fontButton.addClass('font-button');
-    fontButton.style('width', '150px');
-    fontButton.position(width/2 - fontButton.width/2, height - height + 50);
+    fontButton.addClass('button');
+    fontButton.width = 200;
+    fontButton.position(10, 10);
     fontButton.style('font-size', '18px');
-    fontButton.style('font-family', 'Clash Display, sans-serif');
-    fontButton.style('font-weight', '600');
-    fontButton.style('color', '#ccc');
-    fontButton.style('padding', '10px');
-    fontButton.style('border', '2px, solid #ccc');
-    fontButton.style('border-radius', '24px');
-    fontButton.style('background-color', 'black');
+    fontButton.style('font-family', 'FlorDeRuina, sans-serif');
+    fontButton.style('text-transform', 'uppercase');
+    fontButton.style('letter-spacing', '1px');
+    fontButton.style('color', textColor);
+    fontButton.style('border', `2px solid transparent`);
+    fontButton.style('background-color', 'transparent');
     fontButton.mousePressed(() => {
   if (dotFont === font) {
     dotFont = font2;
@@ -72,45 +89,101 @@ function setup() {
   } else {
     dotFont = font;
   }
-
-
-  updateText();
+    updateText();
 });
+
+
+  /// Bouton de changement de forme
+  let shapeButton = createButton('Change Shape');
+    shapeButton.addClass('button');
+    shapeButton.position(10, fontButton.y + fontButton.height + 10);
+    shapeButton.style('font-size', '18px');
+    shapeButton.style('font-family', 'FlorDeRuina, sans-serif');
+    shapeButton.style('text-transform', 'uppercase');
+    shapeButton.style('letter-spacing', '1px');
+    shapeButton.style('color', textColor);
+    shapeButton.style('border', `2px solid transparent`);
+    shapeButton.style('background-color', 'transparent');
+    shapeButton.mousePressed(() => {
+      if (shape === rect) {
+        shape = ellipse;
+      } else {
+        shape = rect;
+      }
+      updateText();});
+
+
+  // Bouton de changement de couleur de texte
+
+
+  let textColorButton = createButton('Text Color');
+    textColorButton.addClass('button');
+    textColorButton.position(fontButton.x + fontButton.width + 10, 10);
+    textColorButton.style('font-size', '18px');
+    textColorButton.style('font-family', 'FlorDeRuina, sans-serif');
+    textColorButton.style('text-transform', 'uppercase');
+    textColorButton.style('letter-spacing', '1px');
+    textColorButton.style('color', textColor);
+    textColorButton.style('border', `2px solid transparent`);
+    textColorButton.style('background-color', 'transparent');
+
+
+  /// Bouton de changement de couleur de fond
+  let backgroundButton = createButton('Change Background');
+    backgroundButton.addClass('button');
+    backgroundButton.position(fontButton.x + fontButton.width + 10, fontButton.y + fontButton.height + 10);
+    backgroundButton.style('font-size', '18px');
+    backgroundButton.style('font-family', 'FlorDeRuina, sans-serif');
+    backgroundButton.style('text-transform', 'uppercase');
+    backgroundButton.style('letter-spacing', '1px');
+    backgroundButton.style('color', textColor);
+    backgroundButton.style('border', `2px solid transparent`);
+    backgroundButton.style('background-color', 'transparent');
+
 
   textAlign(CENTER, CENTER);
   textSize(textSizeValue);
   points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
-    sampleFactor: 0.1, simplifyThreshold: 0
+    sampleFactor: pas, simplifyThreshold: 0
   });
 
+
 function updateText() {
+  textAlign(CENTER, CENTER);
   textSizeValue = textSlider.value();
   points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
-    sampleFactor: 0.1, simplifyThreshold: 0
+    sampleFactor: pas, simplifyThreshold: 0
   });
 }
 }
 
 function draw() {
-  background(10);
+  background(backgroundColor);
+  backgroundColor = bgColorPicker.color();
+  sValue=textColorPicker.color();
+  if (keyIsDown(32)) {
+    if (canToggleColor) {
+      fValue = fValue === 220 ? backgroundColor : 220;
+      canToggleColor = false;
+    }
+  } else {
+    canToggleColor = true;
+  }
+
   for (let i=0; i<points.length; i++){
   fill(fValue); 
   stroke(sValue);
+  strokeWeight(2);
   xMouse = mouseX - width/2;
   yMouse = mouseY - height/2;
+  rectMode(CENTER);
       if (keyIsDown(16) === true) {
-      ellipse(points[i].x, points[i].y, xMouse*0.1, xMouse*0.1);
+      shape(points[i].x, points[i].y, xMouse*0.1, xMouse*0.1);
     } else {
-        ellipse(points[i].x, points[i].y, xMouse*0.1, yMouse*0.1);
+        shape(points[i].x, points[i].y, xMouse*0.1, yMouse*0.1);
     }
-    if (keyIsPressed === true) {
-      if (keyCode === 32) {
-      if (fValue === 220) {
-  fValue = (10)}
-  else {fValue = (220)}
 }
-}
-}
+
 }
 
 function windowResized() {
