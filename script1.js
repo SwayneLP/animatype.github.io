@@ -18,6 +18,8 @@ let textColorPicker;
 let backgroundColorPicker;
 var pas = 0.1;
 
+
+///CHargement des fontes
 function preload() {
   font = loadFont('fonts/Antique-Olive-Std-Black.ttf');
   font2 = loadFont('fonts/Ballet-Regular-VariableFont_opsz.ttf');
@@ -26,13 +28,13 @@ function preload() {
 }
 
 let input;
-
+///Intéraction de scrolling souris pour changer le pas des points
 function mouseWheel(event) {
   event.delta < 0 ? pas = min(pas + 0.01, 1) : pas = max(pas - 0.01, 0.01);
   updateText();
   return false;
 }
-
+///update de texte slider de changement de taille
 function updateText() {
   if (!input || !textSlider || !dotFont) return;
   textAlign(CENTER, CENTER);
@@ -44,7 +46,7 @@ function updateText() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
-
+///Changement des couleurs
     textColorPicker = createColorPicker(textColor);
     textColorPicker.addClass('color-picker');
     textColorPicker.position(450, 10);
@@ -129,9 +131,7 @@ function setup() {
       updateText();});
 
 
-  // Bouton de changement de couleur de texte
-
-
+  // Texte de changement de couleur de texte (C'était un boutton avant je dois changer ça)
   let textColorButton = createButton('Text Color');
     textColorButton.addClass('button');
     textColorButton.position(fontButton.x + fontButton.width + 10, 10);
@@ -144,7 +144,7 @@ function setup() {
     textColorButton.style('background-color', 'transparent');
 
 
-  /// Bouton de changement de couleur de fond
+  /// Texte de changement de couleur de fond (C'était un boutton avant je dois changer ça)
   let backgroundButton = createButton('Change Background');
     backgroundButton.addClass('button');
     backgroundButton.position(fontButton.x + fontButton.width + 10, fontButton.y + fontButton.height + 10);
@@ -156,7 +156,7 @@ function setup() {
     backgroundButton.style('border', `2px solid transparent`);
     backgroundButton.style('background-color', 'transparent');
 
-
+///Création des points sur le chamin du texte
   textAlign(CENTER, CENTER);
   textSize(textSizeValue);
   points = dotFont.textToPoints(input.value(), 0, 0, textSizeValue, {
@@ -166,6 +166,8 @@ function setup() {
 
 function draw() {
   background(backgroundColor);
+
+  /// Changement de couleur de fond du texte avec la barre espace
   backgroundColor = bgColorPicker.color();
   sValue=textColorPicker.color();
   if (keyIsDown(32)) {
@@ -177,6 +179,7 @@ function draw() {
     canToggleColor = true;
   }
 
+  ///Changement de taille homotétique avec LShift
   for (let i=0; i<points.length; i++){
   fill(fValue); 
   stroke(sValue);
@@ -193,6 +196,7 @@ function draw() {
 
 }
 
+///CHangement de taille dynamique, début de responsive
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
